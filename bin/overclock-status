@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Prints where an Overclock project stands: current cycle, open tasks, open questions.
+
+Usage (anywhere inside the project):
+    overclock-status          # a short report
+    overclock-status --hook   # one factual line for the SessionStart hook; silent outside a project
+"""
+import sys
+from collections import Counter
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+from overclock_lib import (  # noqa: E402
+    active_cycles, find_root, has_qa_log, open_questions, parse_task, roadmap_cycles, task_files)
+
+
+def current_cycle(root):
+    """Returns (cycle dict or None, phase): phase is plan, build, qa, next or idle."""
+    cycles = active_cycles(root)
+    finished = [c for c in cycles if c["open"] == 0 and c["done"] > 0]
+    if finished and not has_qa_log(root, finished[-1]["id"]):
+        return finished[-1], "qa"
+    for cycle in cycles:
+        if cycle["open"]:
+            planned = any(parse_task(p)["cycle"].upper() == cycle["id"] for p in task_files(root))
+            return cycle, "build" if planned else "plan"
+    return None, "idle"
+
+
+def summary(root):
+    cycle, phase = current_cycle(root)
+    tasks = [parse_task(p) for p in task_files(root)]
+    questions = open_questions(root)
+    if cycle is None:
+        paused = [c["id"] for c in roadmap_cycles(root) if c["paused"]]
+        where = "no open cycle in the roadmap" + (f" (paused from {paused[0]})" if paused else "")
+        counts = Counter(t["status"] for t in tasks)
+    else:
+        where = f"cycle {cycle['id']}" + (f" ({cycle['title']})" if cycle["title"] else "")
+        where += {"plan": ", not planned yet", "build": "", "qa": ", all items done, waiting for QA"}[phase]
+        counts = Counter(t["status"] for t in tasks if t["cycle"].upper() == cycle["id"])
+    parts = [f"{counts[s]} {s}" for s in ("todo", "design", "dev", "blocked") if counts[s]]
+    tasks_text = ", ".join(parts) if parts else "no open tasks"
+    q_text = f"{len(questions)} open question(s) in .claude/tasks/QUESTIONS.md" if questions else "no open questions"
+    return where, tasks_text, q_text, questions
+
+
+def main():
+    hook = "--hook" in sys.argv[1:]
+    root = find_root()
+    if root is None:
+        if not hook:
+            print("not an Overclock project (no .claude/overclock.md); /overclock sets it up")
+        return 0
+    try:
+        where, tasks_text, q_text, questions = summary(root)
+    except Exception as error:  # the hook must never break a session
+        if hook:
+            return 0
+        raise error
+    if hook:
+        print(f"Overclock Runtime is set up in this project: {where}; tasks: {tasks_text}; {q_text}. "
+              "/overclock:run runs the next step, /overclock:feedback records a request.")
+        return 0
+    print(f"Where: {where}")
+    print(f"Tasks: {tasks_text}")
+    print(f"Questions: {q_text}")
+    for title in questions:
+        print(f"  - {title}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

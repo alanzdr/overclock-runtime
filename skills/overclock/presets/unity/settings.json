@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(Assets/**)",
+      "Write(Assets/**)",
+      "Edit(Tools/**)",
+      "Write(Tools/**)",
+      "Edit(Packages/manifest.json)",
+      "Bash(dotnet build *)",
+      "Bash(unity *)"
+    ],
+    "deny": [
+      "Edit(Library/**)",
+      "Edit(Temp/**)",
+      "Edit(UserSettings/**)"
+    ]
+  }
+}

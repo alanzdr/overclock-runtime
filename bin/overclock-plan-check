@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""Checks a cycle plan and prints its waves: which tasks can run together.
+
+Reads the open tasks of a cycle and verifies what the parallel flow depends on: a closed
+"Files" list with an owner per file, a non-empty Scope, no dependency cycle, no file shared by
+two tasks that may run at the same time, and every "Change" path present on disk or created by
+a task it depends on.
+
+Usage (anywhere inside the project):
+    overclock-plan-check C3
+Exit code: 0 if the plan can run, 1 if it has errors.
+"""
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+from overclock_lib import OPEN_STATUSES, parse_task, require_root, task_files  # noqa: E402
+
+
+def load(root, cycle):
+    tasks = {}
+    for path in task_files(root):
+        task = parse_task(path)
+        if task["cycle"].upper() == cycle.upper() and task["status"] in OPEN_STATUSES:
+            tasks[task["id"]] = task
+    return tasks
+
+
+def waves(tasks):
+    """Groups tasks by dependency depth. Returns (levels, tasks stuck in a cycle)."""
+    done, levels, left = set(), [], set(tasks)
+    while left:
+        ready = sorted(t for t in left if (tasks[t]["deps"] & set(tasks)) <= done)
+        if not ready:
+            return levels, sorted(left)
+        levels.append(ready)
+        done |= set(ready)
+        left -= set(ready)
+    return levels, []
+
+
+def ancestors(tasks, tid):
+    seen, stack = set(), list(tasks[tid]["deps"] & set(tasks))
+    while stack:
+        t = stack.pop()
+        if t not in seen:
+            seen.add(t)
+            stack.extend(tasks[t]["deps"] & set(tasks))
+    return seen
+
+
+def check(tasks, root):
+    errors, notes = [], []
+    levels, stuck = waves(tasks)
+    if stuck:
+        errors.append(f"dependency cycle: {', '.join(stuck)}")
+    for tid, t in sorted(tasks.items()):
+        if not t["create"] and not t["change"]:
+            errors.append(f"{tid}: no 'Create:' or 'Change:' line under ## Files")
+        if not t["scope"]:
+            errors.append(f"{tid}: empty ## Scope")
+        for path in t["unowned"]:
+            errors.append(f"{tid}: `{path}` has no owner, (designer) or (developer)")
+        created_before = set().union(*[tasks[a]["create"] for a in ancestors(tasks, tid)], set())
+        for path in sorted(t["change"]):
+            if not (root / path).exists() and path not in created_before:
+                errors.append(f"{tid}: Change `{path}` does not exist and no dependency creates it")
+    ids = sorted(tasks)
+    for i, a in enumerate(ids):
+        for b in ids[i + 1:]:
+            if a in ancestors(tasks, b) or b in ancestors(tasks, a):
+                continue
+            shared = (tasks[a]["create"] | tasks[a]["change"]) & (tasks[b]["create"] | tasks[b]["change"])
+            for path in sorted(shared):
+                errors.append(f"{a} and {b} both touch `{path}` with no dependency between them")
+    for n, level in enumerate(levels, 1):
+        exclusive = [t for t in level if tasks[t]["exclusive"]]
+        if exclusive and len(level) > 1:
+            notes.append(f"wave {n} has exclusive tasks ({', '.join(exclusive)}); they run alone, after the others")
+    return errors, notes, levels
+
+
+def main():
+    args = sys.argv[1:]
+    if len(args) != 1 or args[0] in ("-h", "--help"):
+        print(__doc__)
+        return 0 if args and args[0] in ("-h", "--help") else 2
+    root = require_root()
+    tasks = load(root, args[0])
+    if not tasks:
+        print(f"no open tasks in {args[0]}")
+        return 1
+    errors, notes, levels = check(tasks, root)
+    for n, level in enumerate(levels, 1):
+        marks = [f"{t}*" if tasks[t]["exclusive"] else t for t in level]
+        print(f"wave {n} ({len(level)}): {' '.join(marks)}")
+    widest = max(map(len, levels), default=0)
+    print(f"{len(tasks)} tasks, {len(levels)} waves, widest {widest}; * = exclusive, runs alone")
+    for note in notes:
+        print(f"note: {note}")
+    for error in errors:
+        print(f"ERROR {error}")
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "overclock-runtime",
+  "description": "Overclock Runtime: an autonomous, parallel development process for Claude Code.",
+  "owner": {
+    "name": "Alanderson",
+    "url": "https://github.com/alanzdr"
+  },
+  "plugins": [
+    {
+      "name": "overclock",
+      "description": "Planner, designers, developers and QA running your roadmap in parallel waves, cycle after cycle. Start with /overclock, run with /loop /overclock:run.",
+      "source": "./",
+      "category": "development"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+"""Reads or sets the status of an Overclock task, in its file and in BACKLOG.md at once.
+
+A task set to done moves to .claude/tasks/done/; set back to any other status, it moves back.
+
+Usage (anywhere inside the project):
+    overclock-task T009 dev       # set the status
+    overclock-task T009           # print the current status
+    overclock-task --next-id      # print the next free task id (for the planner)
+
+Statuses: todo, design, dev, done, blocked.
+"""
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+from overclock_lib import STATUSES, next_task_id, require_root, status_of, task_files, tasks_dir  # noqa: E402
+
+
+def update_backlog(backlog, tid, status):
+    lines = backlog.read_text(encoding="utf-8").splitlines(keepends=True)
+    in_comment = False
+    for i, line in enumerate(lines):
+        if "<!--" in line:
+            in_comment = True
+        if in_comment:
+            if "-->" in line:
+                in_comment = False
+            continue
+        if line.startswith(f"| {tid} |"):
+            cells = line.split("|")
+            if len(cells) < 6:
+                return False
+            cells[4] = f" {status} "  # | id | title | type | status | deps |
+            lines[i] = "|".join(cells)
+            backlog.write_text("".join(lines), encoding="utf-8")
+            return True
+    return False
+
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] in ("-h", "--help") or len(args) > 2:
+        print(__doc__)
+        return 0 if args and args[0] in ("-h", "--help") else 2
+    root = require_root()
+    if args[0] == "--next-id":
+        print(next_task_id(root))
+        return 0
+
+    tid = args[0].upper()
+    matches = [p for p in task_files(root, include_done=True) if p.name.upper().startswith(f"{tid}-")]
+    if len(matches) != 1:
+        print(f"expected one task file for {tid}, found {len(matches)}", file=sys.stderr)
+        return 1
+    path = matches[0]
+    text = path.read_text(encoding="utf-8")
+    current = status_of(text)
+    if not current:
+        print(f"no '- **Status:**' line in {path.name}", file=sys.stderr)
+        return 1
+    if len(args) == 1:
+        print(current)
+        return 0
+
+    status = args[1].lower()
+    if status not in STATUSES:
+        print(f"invalid status {status}; use one of: {', '.join(STATUSES)}", file=sys.stderr)
+        return 1
+    marker = "- **Status:**"
+    start = text.index(marker) + len(marker)
+    end = text.index("\n", start) if "\n" in text[start:] else len(text)
+    path.write_text(text[:start] + f" {status}" + text[end:], encoding="utf-8")
+
+    folder = tasks_dir(root) / "done" if status == "done" else tasks_dir(root)
+    folder.mkdir(exist_ok=True)
+    if path.parent != folder:
+        path.rename(folder / path.name)
+
+    backlog = tasks_dir(root) / "BACKLOG.md"
+    if not backlog.is_file() or not update_backlog(backlog, tid, status):
+        print(f"{tid}: task file updated, but no '| {tid} |' row in BACKLOG.md", file=sys.stderr)
+        return 1
+    print(f"{tid}: {current} -> {status}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

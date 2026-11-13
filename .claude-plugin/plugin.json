@@ -1,0 +1,21 @@
+{
+  "name": "overclock",
+  "version": "0.1.0",
+  "description": "Overclock Runtime: turns Claude Code into an autonomous dev crew. A planner splits the roadmap into tasks with closed file lists, designers and developers build them in parallel waves, QA runs the whole app at the end of each cycle, and the next cycle starts on its own.",
+  "author": {
+    "name": "Alanderson",
+    "url": "https://github.com/alanzdr"
+  },
+  "homepage": "https://github.com/alanzdr/overclock-runtime",
+  "repository": "https://github.com/alanzdr/overclock-runtime",
+  "license": "MIT",
+  "keywords": [
+    "autonomous",
+    "multi-agent",
+    "orchestration",
+    "parallel",
+    "planner",
+    "qa",
+    "workflow"
+  ]
+}
