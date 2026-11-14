@@ -1,6 +1,6 @@
 # The project layer
 
-Everything the plugin's agents read in the project. Templates are in `${CLAUDE_PLUGIN_ROOT}/templates/`;
+Everything the plugin's agents read in the project. Templates are in the plugin's `templates/` (print them with `overclock-show templates/<file>`);
 write their prose in the project's language and keep their fixed labels.
 
 ## Files
@@ -8,7 +8,7 @@ write their prose in the project's language and keep their fixed labels.
 ```
 CLAUDE.md                     the Overclock block, between <!-- overclock:begin --> and <!-- overclock:end -->
 .claude/overclock.md          the config (templates/overclock.md); its frontmatter `overclock:` is the
-                              plugin version that wrote it (read it from ${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json)
+                              plugin version that wrote it (`overclock-show --version`)
 .claude/settings.json         permissions, merged (below)
 .claude/scripts/check.py      the check command (below), unless the project already has one that fits
 .claude/docs/product.md       templates/docs/product.md
@@ -46,14 +46,15 @@ The task format is not copied: agents read it from the plugin (`templates/tasks/
 Plugins can't ship permissions, so the project gets them here. Merge, never overwrite: read the existing
 file, add the missing rules to `permissions.allow` and `permissions.deny`, keep everything else.
 
-1. Always: the rules in `${CLAUDE_SKILL_DIR}/presets/base-settings.json` (the `overclock-*` commands, the
+1. Always: the rules in `overclock-show skills/overclock/presets/base-settings.json` (the `overclock-*` commands, the
    check script, read-only git and the commit commands, the process folders; and the deny list for
    history-rewriting git commands).
 2. The stack preset's `settings.json` (package manager, test runners, local services).
 3. Deny reading and editing every secrets file the project has (`.env`, `.env.prod`, credentials).
 4. Plugin activation, so collaborators get it too:
    `"enabledPlugins": { "overclock@overclock-runtime": true }` and
-   `"extraKnownMarketplaces": { "overclock-runtime": { "source": { "source": "github", "repo": "alanzdr/overclock-runtime" } } }`.
+   `"extraKnownMarketplaces": { "overclock-runtime": { "source": { "source": "github", "repo": "alanzdr/overclock-runtime" }, "autoUpdate": true } }`
+   (third-party marketplaces don't auto-update by default; this keeps the process current everywhere).
 
 ## The check command
 
@@ -67,7 +68,7 @@ Every role validates with the same command, so its contract matters more than it
 - A tool that isn't installed yet prints `SKIP` and doesn't fail (so C1 can start from an empty folder).
 - Fast: it runs after every task. Never starts servers, never needs network.
 
-Presets in `${CLAUDE_SKILL_DIR}/presets/`, each with a `check.py` and a `settings.json`:
+Presets in `skills/overclock/presets/` (`overclock-show skills/overclock/presets/<preset>/check.py`), each with a `check.py` and a `settings.json`:
 
 | Preset | For |
 |---|---|

@@ -1,205 +1,243 @@
-# Overclock Runtime
+<p align="center">
+  <img src="assets/logo.svg" alt="Overclock Runtime: a determined CPU chip running hot, with flames on top" width="210">
+</p>
 
-**Turn Claude Code into an autonomous dev crew that ships your roadmap in parallel waves, cycle after cycle.**
+<h1 align="center">Overclock Runtime</h1>
+
+<p align="center">
+  <b>Your roadmap, built by a crew of Claudes. In parallel. On its own.</b> 🔥
+</p>
+
+<p align="center">
+  <img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-E3194F?style=for-the-badge&logo=anthropic&logoColor=white">
+  <img alt="Version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-C2185B?style=for-the-badge">
+  <img alt="MIT license" src="https://img.shields.io/badge/license-MIT-9D4EDD?style=for-the-badge">
+</p>
 
 ```
-/overclock                # set up the project (new or existing)
-/loop /overclock:run      # let the crew work
+/overclock               🔧 set up the project
+/loop /overclock:run     🔥 let it cook
 ```
-
-A planner splits the roadmap into tasks with **closed file lists**. Designers and developers build every
-task that doesn't collide **at the same time**. QA runs the whole app at the end of the cycle and logs bugs
-and improvements. The next cycle's planner turns them into tasks, and the loop keeps going until the
-roadmap is done. Claude decides and proceeds on its own, and stops only for what really needs you: money,
-publishing, things that are hard to undo, or contradicting a decision you made.
-
-Overclock Runtime was extracted from a process refined by hand across several real projects (web apps and a
-game). In its last version it took a fresh project through two full cycles and most of a third in a single
-day: 79 tasks, 102 commits.
 
 ---
 
-## The cycle
+## 🍳 Explain it like I'm five
 
-```mermaid
-flowchart LR
-    R[(roadmap +<br/>open bugs &<br/>improvements)] --> P[planner<br/>splits into tasks<br/>with closed file lists]
-    P --> W1
-    subgraph W1 [wave 1]
-      direction TB
-      C[contract task:<br/>shared types, deps]
-    end
-    W1 --> W2
-    subgraph W2 [wave 2: everything that doesn't collide]
-      direction TB
-      D1[designer → developer]
-      D2[designer → developer]
-      D3[developer]
-      D4[developer]
-    end
-    W2 --> I[integration task:<br/>shared files]
-    I --> Q[QA<br/>runs the whole app,<br/>logs bugs & improvements]
-    Q --> R
-```
+Your project is a restaurant kitchen.
 
-- **One step per invocation:** a planning, a whole wave, or the cycle's QA. With `/loop`, steps chain with no
-  idle time; the scheduled wakeup is only a backup in case an agent's notification never arrives.
-- **Parallel by construction:** each task lists every file it creates or changes, with an owner
-  (`(designer)` or `(developer)`). Two tasks run together only if their lists don't touch.
-  `overclock-plan-check` verifies the plan before anything runs.
-- **Shared files don't block:** when ten screens need the same navigation file, the ten screens run in
-  parallel and one `integration` task makes all the edits after them.
-- **Exclusive work runs alone:** installing dependencies, generating migrations, regenerating data, or using
-  a single resource (a game editor, a device) happens between waves.
-- **Feedback closes the loop:** QA never creates tasks; it writes `BUGS.md` and `IMPROVEMENTS.md`, and the
-  next planner plans them with the same rigor as roadmap items.
+- 📜 **You** write the menu: the roadmap.
+- 🧠 The **planner** turns it into recipes and gives every cook **their own pan**.
+- 🎨 The **designer** decides how each plate looks before anyone cooks.
+- 🛠️ The **developers** cook **at the same time**. Nobody grabs someone else's pan.
+- 🔍 **QA** tastes everything at the end and writes down what to fix tomorrow.
+- 🔁 Tomorrow the planner starts again from that list. Until the menu is done.
 
-## The crew
+<p align="center">
+  <img src="assets/cycle.svg" alt="One cycle: roadmap, planner, a wave of builders working at once, QA, and the bugs and ideas going back to the planner" width="100%">
+</p>
 
-| Role | Runs | Does | Doesn't |
-|---|---|---|---|
-| **run** (skill) | every step | Reads the state, starts the right agents in parallel, commits each task, writes the logs, moves to the next cycle | Read code or diffs, write tasks, design, implement |
-| **planner** | start of each cycle | Turns roadmap items, bugs and improvements into tasks with closed file lists, agreed interfaces and waves; makes product and technical decisions | Write code, decide the look |
-| **designer** | before the developer, on tasks with something new to see | Owns the design system, screen specs, tokens and art (or, in a game, mechanics and art direction); writes interface texts | Write app code, run the app |
-| **developer** | one per task | Implements one task in its own files, validates with the project's check command, reports in the task | Commit, start the app, touch files outside its list |
-| **qa** | end of each cycle | The only one who runs the app: full battery, every screen across the QA matrix, captures compared with the specs, end-to-end tests | Create tasks, fix app code |
+## 👩‍🍳 Meet the crew
 
-Default models: planner on the strongest model with high effort, designer and QA on Opus, developers on
-Sonnet. The planner sets the effort of each designer and developer per task, and the project can override
-any role in its config.
+<p align="center">
+  <img src="assets/crew.svg" alt="The crew: planner, designer, developers and QA" width="100%">
+</p>
 
-## Install
+## ⚡ Why it's fast
+
+<p align="center">
+  <img src="assets/waves.svg" alt="Inside a cycle: a contract task alone, then five tasks at the same time, then one integration task, then QA" width="100%">
+</p>
+
+- 🗂️ **Every task lists every file it touches.** Two tasks run together only if their lists don't overlap, and
+  `overclock-plan-check` proves it before anyone starts.
+- 🧩 **Shared files don't block.** Ten screens need the same menu file? The ten run in parallel, and one
+  **integration** task makes all the edits after them.
+- 🔒 **Risky stuff runs alone.** Installing packages, migrations and data rebuilds happen between waves.
+
+> 🌡️ Born from a hand-made process used on real projects. Its last version took a fresh project through
+> two full cycles and most of a third **in one day: 79 tasks, 102 commits.**
+
+## 🚀 Get started
+
+**1. Install**
 
 ```
 /plugin marketplace add alanzdr/overclock-runtime
 /plugin install overclock@overclock-runtime
 ```
 
-Requirements: Claude Code, git, and Python 3 (the helper commands use only the standard library).
+**2. Set up your project**
 
-## Quickstart
+| 🆕 New project | 📦 Existing project |
+|---|---|
+| `/overclock a web app where bakeries take pre-orders` | `/overclock` |
+| Asks a few questions, decides the rest, writes the plan | Reads your code first, asks only what the code can't tell |
 
-**New project.** In an empty folder:
-
-```
-/overclock a web app where small bakeries take pre-orders
-```
-
-Overclock asks at most a few questions (what it is, stack, what the first version needs, whether it may
-spend money or publish), decides the rest, and writes the project layer: product doc, roadmap with a
-**C1 — Foundation** cycle, config, task files, permissions and a check script.
-
-**Existing project.** In the repository:
-
-```
-/overclock
-```
-
-It reads the code first (manifests, scripts, folders, conventions, shared files) and asks only what the
-code can't answer.
-
-**Then run it:**
+**3. Let it cook**
 
 ```
 /loop /overclock:run
 ```
 
-Or `/overclock:run` for a single step. `/overclock` alone (without the prefix) works too; if your setup
-ever resolves it differently, `/overclock:overclock` is the same command.
+> [!TIP]
+> Open the project in Claude Code and accept the **trust dialog** once. Claude Code only applies the
+> project's permissions in a trusted folder, and without them the crew stops to ask about every file.
 
-## While it runs
+Needs: Claude Code, git and Python 3.
 
-| You want to | Do |
+## 🎮 While it cooks
+
+| You want to… | Do this |
 |---|---|
-| Ask for a change, report a bug, make a decision | `/overclock:feedback make the header more compact` |
-| Answer a question the process left | Write `**Answer:** …` under it in `.claude/tasks/QUESTIONS.md`, or use `/overclock:feedback` |
-| See where it is | `overclock-status`, or just open a new session: one line tells you |
-| Hold the process | Add `[paused]` to a cycle title in `.claude/docs/roadmap.md`; it stops before that cycle |
-| See a finished cycle | QA leaves a `Notice:` in `QUESTIONS.md` with how to run it |
+| 🗣️ Ask for a change, report a bug, decide something | `/overclock:feedback make the header smaller` |
+| ✍️ Answer a question it left you | Write `**Answer:** …` under it in `.claude/tasks/QUESTIONS.md` |
+| 👀 See where it is | `overclock-status`, or open a new session: the first line tells you |
+| ⏸️ Hold it | Put `[paused]` in a cycle title in `.claude/docs/roadmap.md` |
+| 🍽️ Taste a finished cycle | QA leaves a `Notice:` in `QUESTIONS.md` with how to run it |
 
-**Your decisions win.** Decisions are recorded in two tables: `A#` (yours, fixed until you change them) and
-`D#` (Claude's, revisable). Feedback that changes a `D#` turns it into an `A#`, and nothing in the process
-contradicts it after that.
+## 🛑 When it stops to ask you
 
-## What it creates in your project
+Overclock **decides and keeps going.** It only stops for four things:
+
+| 💸 Money | 🌍 Publishing | 🧨 Can't undo | ✋ Your decisions |
+|:---:|:---:|:---:|:---:|
+| paid APIs, accounts, keys | deploy, push, new services | deleting data, rewriting history | anything that contradicts them |
+
+Every decision is written down. **Yours (`A#`) are law** until you change them. Claude's (`D#`) can be
+revised, and `/overclock:feedback` turns any of them into yours.
+
+## 🤔 When *not* to use it
+
+- 🔧 **A tiny change.** Just ask Claude: a cycle has planning and QA overhead.
+- ✅ **You want to approve every step.** Overclock is built to keep going. Try the ones below.
+- 🧪 **No tests and no way to check the code.** Problems pile up until QA.
+- 👀 **You need code review on every change.** There is none between tasks, by design: the full check after
+  each wave and QA after each cycle look at the whole.
+
+## 🆚 How it compares
+
+| | 🔥 Overclock | [Superpowers](https://github.com/obra/superpowers) | [GSD](https://github.com/open-gsd/gsd-core) | [Spec Kit](https://github.com/github/spec-kit) |
+|---|:---:|:---:|:---:|:---:|
+| Scope | whole roadmap | one feature | project phases | one feature |
+| Builders in parallel | ✅ waves by file | ❌ on purpose | ✅ waves | ❌ |
+| Stops for you | 4 things only | design + plan | discuss + accept | every step |
+| Tests the running app | ✅ QA each cycle | branch review | verifier | you |
+| Sets up your project | ✅ new or existing | ❌ | ✅ | ✅ |
+
+Superpowers is great at careful, reviewed work on one feature. Overclock is for moving a whole roadmap
+while you're away. They get along fine.
+
+## 🧰 Under the hood
+
+<details>
+<summary><b>📁 What it creates in your project</b></summary>
 
 ```
-CLAUDE.md                     a block between <!-- overclock:begin/end --> markers: rules + docs map
-.claude/overclock.md          project config: stack, commands, exclusive resources, shared files,
-                              roles, QA matrix, git and version rules, limits (secrets, money, publishing)
-.claude/settings.json         permissions for the process (merged, never overwritten)
-.claude/scripts/check.py      the check command every role validates with
-.claude/docs/                 product, architecture, roadmap, decisions, design system (or the
-                              designer's equivalents)
-.claude/tasks/                BACKLOG, BUGS, IMPROVEMENTS, QUESTIONS, open tasks, done/, logs/
-.claude/roles/<role>.md       optional extra rules for one role in this project
-.claude/qa/C<N>/              QA's captures (git-ignored)
+CLAUDE.md                  a block between <!-- overclock:begin/end -->: rules + a map of the docs
+.claude/overclock.md       config: stack, commands, exclusive resources, shared files, roles,
+                           QA matrix, git and version rules, limits (secrets, money, publishing)
+.claude/settings.json      the permissions the crew needs (merged, never overwritten)
+.claude/scripts/check.py   the check command everyone validates with
+.claude/docs/              product, architecture, roadmap, decisions, design system
+.claude/tasks/             BACKLOG, BUGS, IMPROVEMENTS, QUESTIONS, open tasks, done/, logs/
+.claude/roles/<role>.md    optional extra rules for one role
+.claude/qa/C<N>/           QA's screenshots (git-ignored)
 ```
 
 The process itself (agents, orchestration, task format) stays in the plugin. Update the plugin and every
-project gets the new process; run `/overclock` again in a project to bring its layer up to date.
+project gets the new process; run `/overclock` again to refresh a project's files.
 
-Everything the process writes follows **your** language: tasks, docs, logs and commits come out in the
-language you work in. Only the field labels the helper commands parse (`Status:`, `Files`, `Create:`…)
-are fixed.
+Everything it writes follows **your** language. Only the labels the helper commands read (`Status:`,
+`Files`, `Create:`…) stay fixed.
 
-### The check command
+</details>
 
-Every role validates with the same contract, so the parallel flow works in any stack:
+<details>
+<summary><b>🧪 The check command</b></summary>
 
-- `check --only a.ts,b.ts`: types, lint and unit tests **scoped to those files**; errors in other files
-  print as `OTHER` (they belong to tasks still in progress) and don't fail.
-- `check`: the whole project, run at the end of every wave.
-- `check --full`: plus the production build, run by QA.
+One contract, any stack:
+
+| Command | Does | When |
+|---|---|---|
+| `check --only a.ts,b.ts` | types, lint, unit tests **of those files**; other files' errors print as `OTHER` and don't fail | after each task |
+| `check` | the same, whole project | after each wave |
+| `check --full` | plus the production build | QA |
 
 Presets ship for TypeScript web apps (Next.js, Bun, ESLint, Vitest), Unity (compiles every assembly with
-`dotnet`, no editor needed) and a generic one that wraps your own commands.
+`dotnet`, no editor) and a generic one that wraps your own commands.
 
-## Helper commands
+</details>
+
+<details>
+<summary><b>🔧 Helper commands</b></summary>
 
 The plugin puts these on the `PATH` of every session:
 
 | Command | Does |
 |---|---|
-| `overclock-status` | Current cycle, open tasks by status, open questions |
-| `overclock-plan-check C<N>` | Validates a cycle's plan and prints its waves |
-| `overclock-task T### <status>` | Moves a task's status in its file and in the backlog at once |
-| `overclock-task --next-id` | The next free task id |
-| `overclock-doc-sizes` | Flags process docs that grew too big for every agent to read |
+| `overclock-status` | current cycle, open tasks, open questions |
+| `overclock-plan-check C<N>` | validates a cycle's plan and prints its waves |
+| `overclock-task T### <status>` | moves a task's status in its file and the backlog at once |
+| `overclock-task --next-id` | the next free task id |
+| `overclock-doc-sizes` | flags docs that grew too big for every agent to read |
+| `overclock-show <file>` | prints a template or reference from the plugin |
 
-## When not to use it
+</details>
 
-- **A one-off change or a small feature.** Talk to Claude directly; a cycle has planning and QA overhead
-  that only pays off over many tasks.
-- **When you want to approve every step.** Overclock is built to decide and proceed. If you want a gate at
-  every design and plan, look at the alternatives below.
-- **Without tests or a way to check the code.** The parallel flow trusts the check command between tasks
-  and QA at the end. A project with neither will accumulate problems until QA.
-- **There is no code review between tasks,** by design: the full check at the end of each wave and QA at
-  the end of each cycle look at the whole. For code that needs a reviewer on every change (security,
-  payments), review those cycles yourself or ask for it through `/overclock:feedback`.
+<details>
+<summary><b>🔄 Keep it updated</b></summary>
 
-## How it compares
+Claude Code doesn't auto-update third-party marketplaces by default. Turn it on in `/plugin` →
+Marketplaces, or in `~/.claude/settings.json`:
 
-| | Overclock Runtime | [Superpowers](https://github.com/obra/superpowers) | [GSD](https://github.com/open-gsd/gsd-core) | [Spec Kit](https://github.com/github/spec-kit) |
-|---|---|---|---|---|
-| Unit of work | a roadmap of cycles | one feature branch | phases of a project | one feature spec |
-| Parallel implementers | yes, waves by closed file lists | no, one task at a time on purpose | yes, waves | no |
-| Human gates | only money, publishing, irreversible, your decisions | design and plan approval | discussion and acceptance testing | after each step |
-| Who tests the running app | a QA agent each cycle | tests per task, final branch review | a verifier per phase | you |
-| Project bootstrap | `/overclock` (new or existing) | none | new or onboard | `specify init` |
+```json
+{
+  "extraKnownMarketplaces": {
+    "overclock-runtime": {
+      "source": { "source": "github", "repo": "alanzdr/overclock-runtime" },
+      "autoUpdate": true
+    }
+  }
+}
+```
 
-Superpowers is excellent at disciplined, reviewed, sequential work on one feature. Overclock is for taking a
-whole roadmap forward unattended. They can live side by side.
+Projects set up by `/overclock` already carry this (and `enabledPlugins`) in `.claude/settings.json`, so
+collaborators get the plugin and its updates too.
 
-## Development
+</details>
+
+<details>
+<summary><b>🧠 Models</b></summary>
+
+| Role | Default |
+|---|---|
+| planner | the strongest model, high effort |
+| designer | Opus; the strongest model when the design base changes |
+| developer | Sonnet; effort set per task by the planner |
+| QA | Opus, high effort |
+
+Override any role in `.claude/overclock.md`.
+
+**Out of Fable (or any model)?** Claude Code doesn't switch models when a usage limit hits, so Overclock
+does: the failed agent is called again one step down (Fable → Opus → Sonnet), told to finish what the cut-off
+attempt started, and the switch is written in the log. Only when every model is out does it stop, leaving a
+`Notice:` with the reset time. Want the planner on Opus for good? Set it in `.claude/overclock.md`.
+
+</details>
+
+<details>
+<summary><b>🛠️ Hacking on the plugin</b></summary>
 
 ```
-python3 -m unittest discover -s tests     # helper commands and skill sizes
+python3 -m unittest discover -s tests       # helper commands + skill sizes
 claude plugin validate --strict .
-claude --plugin-dir . -p "/overclock:run" # try it from a project folder
+claude --plugin-dir /path/to/overclock-runtime   # try it in any project
 ```
 
-## License
+</details>
 
-MIT
+---
+
+<p align="center">
+  MIT · made with 🔥 and too many cycles
+</p>

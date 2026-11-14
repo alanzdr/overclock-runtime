@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" role="img" aria-labelledby="title desc" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="title">One cycle</title>
+  <desc id="desc">The roadmap goes to the planner, the planner hands tasks to a wave of builders working at the same time, QA tastes everything at the end, and the bugs and ideas QA finds go back to the planner as the next cycle.</desc>
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset=".5" stop-color="#C2185B"/>
+      <stop offset="1" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset="1" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <linearGradient id="back" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#9D4EDD"/>
+      <stop offset="1" stop-color="#FF2E4D"/>
+    </linearGradient>
+    <linearGradient id="die" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF4D5E"/>
+      <stop offset=".55" stop-color="#D81B60"/>
+      <stop offset="1" stop-color="#8E3BD1"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22081C"/>
+      <stop offset="1" stop-color="#12050E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FF2E4D" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#FF2E4D" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#E3407A"/>
+    </marker>
+    <g id="chip">
+      <g fill="#E3194F">
+        <rect x="-37.5" y="-62" width="7" height="18" rx="2.5"/><rect x="-20.5" y="-62" width="7" height="18" rx="2.5"/><rect x="-3.5" y="-62" width="7" height="18" rx="2.5"/><rect x="13.5" y="-62" width="7" height="18" rx="2.5"/><rect x="30.5" y="-62" width="7" height="18" rx="2.5"/>
+        <rect x="-37.5" y="44" width="7" height="18" rx="2.5"/><rect x="-20.5" y="44" width="7" height="18" rx="2.5"/><rect x="-3.5" y="44" width="7" height="18" rx="2.5"/><rect x="13.5" y="44" width="7" height="18" rx="2.5"/><rect x="30.5" y="44" width="7" height="18" rx="2.5"/>
+        <rect x="-62" y="-37.5" width="18" height="7" rx="2.5"/><rect x="-62" y="-20.5" width="18" height="7" rx="2.5"/><rect x="-62" y="-3.5" width="18" height="7" rx="2.5"/><rect x="-62" y="13.5" width="18" height="7" rx="2.5"/><rect x="-62" y="30.5" width="18" height="7" rx="2.5"/>
+        <rect x="44" y="-37.5" width="18" height="7" rx="2.5"/><rect x="44" y="-20.5" width="18" height="7" rx="2.5"/><rect x="44" y="-3.5" width="18" height="7" rx="2.5"/><rect x="44" y="13.5" width="18" height="7" rx="2.5"/><rect x="44" y="30.5" width="18" height="7" rx="2.5"/>
+      </g>
+      <rect x="-50" y="-50" width="100" height="100" rx="14" fill="#1C0B19" stroke="url(#ring)" stroke-width="3.5"/>
+      <rect x="-36" y="-36" width="72" height="72" rx="10" fill="url(#die)"/>
+      <g fill="none" stroke="#1C0B19" stroke-width="4" stroke-linecap="round"><path d="M-26 -14L-10 -9"/><path d="M26 -14L10 -9"/></g>
+      <ellipse cx="-14" cy="0" rx="6.5" ry="7.5" fill="#FFF4F7"/><ellipse cx="14" cy="0" rx="6.5" ry="7.5" fill="#FFF4F7"/>
+      <circle cx="-12.5" cy="1.5" r="3.5" fill="#1C0B19"/><circle cx="12.5" cy="1.5" r="3.5" fill="#1C0B19"/>
+      <path d="M-17 13Q0 31 17 13Q0 19 -17 13Z" fill="#1C0B19"/>
+      <path d="M-11 15Q0 18 11 15L10 18Q0 21 -10 18Z" fill="#FFF4F7"/>
+    </g>
+    <g id="hat">
+      <path d="M-40 -52C-40 -84 40 -84 40 -52Z" fill="#FF8A3D"/>
+      <rect x="-50" y="-56" width="100" height="10" rx="5" fill="#FF6B2C"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="458" rx="26" fill="url(#bg)" stroke="url(#ring)" stroke-width="2"/>
+  <text x="40" y="52" fill="#FF6F8E" font-size="15" font-weight="800" letter-spacing="3">ONE CYCLE</text>
+
+  <!-- 1. Roadmap -->
+  <g transform="translate(120 190)">
+    <circle r="80" fill="url(#glow)"/>
+    <path d="M-40 -52H30Q40 -52 40 -42V48Q40 58 30 58H-30Q-40 58 -40 48Z" fill="#FFE9F0"/>
+    <path d="M-40 -52Q-52 -52 -52 -40Q-52 -28 -40 -28" fill="#E8C9D6"/>
+    <g stroke-width="4" stroke-linecap="round" fill="none">
+      <path d="M-26 -30l5 5 9-10" stroke="#C2185B"/>
+      <path d="M-4 -28H26" stroke="#B9A0B0"/>
+      <path d="M-26 -2l5 5 9-10" stroke="#C2185B"/>
+      <path d="M-4 0H26" stroke="#B9A0B0"/>
+      <rect x="-27" y="20" width="14" height="14" rx="3" stroke="#B9A0B0"/>
+      <path d="M-4 27H26" stroke="#B9A0B0"/>
+    </g>
+    <text y="110" text-anchor="middle" fill="#FFE9F0" font-size="22" font-weight="800">Roadmap</text>
+    <text y="134" text-anchor="middle" fill="#D9B8C8" font-size="14">what you want built</text>
+  </g>
+
+  <path d="M190 190H246" stroke="url(#flow)" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+  <!-- 2. Planner -->
+  <g transform="translate(330 190)">
+    <circle r="86" fill="url(#glow)"/>
+    <use href="#chip" transform="scale(.82)"/>
+    <g fill="none" stroke="#FFE9F0" stroke-width="2.6" transform="scale(.82)">
+      <circle cx="-14" cy="0" r="11"/><circle cx="14" cy="0" r="11"/><path d="M-3 0H3"/>
+    </g>
+    <text y="110" text-anchor="middle" fill="#FFE9F0" font-size="22" font-weight="800">Planner</text>
+    <text y="134" text-anchor="middle" fill="#D9B8C8" font-size="14">splits it into tasks</text>
+  </g>
+
+  <path d="M412 190H468" stroke="url(#flow)" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+  <!-- 3. Wave -->
+  <g transform="translate(486 76)">
+    <rect width="250" height="236" rx="20" fill="#2A0B22" stroke="url(#ring)" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="125" y="30" text-anchor="middle" fill="#FF6F8E" font-size="13" font-weight="800" letter-spacing="2">ALL AT ONCE</text>
+    <use href="#chip" transform="translate(60 98) scale(.5)"/><use href="#hat" transform="translate(60 98) scale(.5)"/>
+    <use href="#chip" transform="translate(125 98) scale(.5)"/><use href="#hat" transform="translate(125 98) scale(.5)"/>
+    <use href="#chip" transform="translate(190 98) scale(.5)"/><use href="#hat" transform="translate(190 98) scale(.5)"/>
+    <use href="#chip" transform="translate(92 172) scale(.5)"/><use href="#hat" transform="translate(92 172) scale(.5)"/>
+    <use href="#chip" transform="translate(158 172) scale(.5)"/><use href="#hat" transform="translate(158 172) scale(.5)"/>
+    <text x="125" y="228" text-anchor="middle" fill="#D9B8C8" font-size="12">one pan each · no bumping</text>
+  </g>
+  <text x="611" y="344" text-anchor="middle" fill="#FFE9F0" font-size="22" font-weight="800">Designers + Developers</text>
+
+  <path d="M752 190H808" stroke="url(#flow)" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+  <!-- 4. QA -->
+  <g transform="translate(886 190)">
+    <circle r="86" fill="url(#glow)"/>
+    <use href="#chip" transform="scale(.82)"/>
+    <g transform="scale(.82)">
+      <circle cx="14" cy="0" r="18" fill="#8FD3FF" fill-opacity=".25" stroke="#FFE9F0" stroke-width="5"/>
+      <path d="M27 13L56 42" stroke="#FFE9F0" stroke-width="9" stroke-linecap="round"/>
+    </g>
+    <text y="110" text-anchor="middle" fill="#FFE9F0" font-size="22" font-weight="800">QA</text>
+    <text y="134" text-anchor="middle" fill="#D9B8C8" font-size="14">tastes everything</text>
+  </g>
+
+  <!-- Back to the planner -->
+  <path d="M886 340C886 410 850 418 760 418H420C350 418 330 400 330 362" fill="none" stroke="url(#back)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12" marker-end="url(#arrow)"/>
+  <rect x="470" y="400" width="250" height="36" rx="18" fill="#3A0E2E" stroke="#9D4EDD" stroke-width="1.5"/>
+  <text x="595" y="424" text-anchor="middle" fill="#FFE9F0" font-size="14" font-weight="700">🐞 bugs + 💡 ideas → next cycle</text>
+</svg>

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-labelledby="title desc" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="title">Parallel waves</title>
+  <desc id="desc">A timeline of one cycle. Wave 1 is a single contract task that runs alone. Wave 2 is five tasks running at the same time, some with a design part before the code. Wave 3 is one integration task that joins them. Then QA tests everything.</desc>
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset=".5" stop-color="#C2185B"/>
+      <stop offset="1" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22081C"/>
+      <stop offset="1" stop-color="#12050E"/>
+    </linearGradient>
+    <linearGradient id="dev" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset="1" stop-color="#E3194F"/>
+    </linearGradient>
+    <linearGradient id="design" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B565F0"/>
+      <stop offset="1" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <linearGradient id="qa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C2185B"/>
+      <stop offset="1" stop-color="#7B2CBF"/>
+    </linearGradient>
+    <pattern id="stripes" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="12" height="12" fill="#FF8A3D"/>
+      <rect width="6" height="12" fill="#FF6B2C"/>
+    </pattern>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="438" rx="26" fill="url(#bg)" stroke="url(#ring)" stroke-width="2"/>
+  <text x="40" y="52" fill="#FF6F8E" font-size="15" font-weight="800" letter-spacing="3">INSIDE A CYCLE</text>
+  <text x="40" y="80" fill="#D9B8C8" font-size="15">Every task owns its files, so everything that doesn't touch the same file runs at the same time.</text>
+
+  <!-- Columns -->
+  <g fill="#FFFFFF" fill-opacity=".04">
+    <rect x="40" y="104" width="170" height="268" rx="14"/>
+    <rect x="224" y="104" width="400" height="268" rx="14"/>
+    <rect x="638" y="104" width="160" height="268" rx="14"/>
+    <rect x="812" y="104" width="148" height="268" rx="14"/>
+  </g>
+  <g fill="#FF6F8E" font-size="13" font-weight="800" letter-spacing="2" text-anchor="middle">
+    <text x="125" y="128">WAVE 1</text>
+    <text x="424" y="128">WAVE 2</text>
+    <text x="718" y="128">WAVE 3</text>
+    <text x="886" y="128">END</text>
+  </g>
+
+  <!-- Wave 1: contract, runs alone -->
+  <rect x="54" y="214" width="142" height="40" rx="10" fill="url(#stripes)"/>
+  <text x="125" y="239" text-anchor="middle" fill="#2A0B22" font-size="14" font-weight="800">contract</text>
+  <text x="125" y="276" text-anchor="middle" fill="#D9B8C8" font-size="12">shared types, deps</text>
+  <text x="125" y="294" text-anchor="middle" fill="#D9B8C8" font-size="12">runs alone</text>
+
+  <!-- Wave 2: five tasks at once -->
+  <g font-size="13" font-weight="700" fill="#FFF4F7">
+    <rect x="238" y="146" width="92" height="34" rx="9" fill="url(#design)"/>
+    <rect x="334" y="146" width="244" height="34" rx="9" fill="url(#dev)"/>
+    <text x="250" y="168">🎨 design</text>
+    <text x="346" y="168">home screen</text>
+    <text x="566" y="168" text-anchor="end" font-family="'JetBrains Mono', Consolas, Menlo, monospace" font-size="11" font-weight="400" fill-opacity=".85">home.tsx</text>
+
+    <rect x="238" y="190" width="70" height="34" rx="9" fill="url(#design)"/>
+    <rect x="312" y="190" width="200" height="34" rx="9" fill="url(#dev)"/>
+    <text x="250" y="212">🎨</text>
+    <text x="324" y="212">cart</text>
+    <text x="500" y="212" text-anchor="end" font-family="'JetBrains Mono', Consolas, Menlo, monospace" font-size="11" font-weight="400" fill-opacity=".85">cart.tsx</text>
+
+    <rect x="238" y="234" width="320" height="34" rx="9" fill="url(#dev)"/>
+    <text x="250" y="256">order rules</text>
+    <text x="546" y="256" text-anchor="end" font-family="'JetBrains Mono', Consolas, Menlo, monospace" font-size="11" font-weight="400" fill-opacity=".85">orders.ts</text>
+
+    <rect x="238" y="278" width="250" height="34" rx="9" fill="url(#dev)"/>
+    <text x="250" y="300">orders API</text>
+    <text x="476" y="300" text-anchor="end" font-family="'JetBrains Mono', Consolas, Menlo, monospace" font-size="11" font-weight="400" fill-opacity=".85">api/orders.ts</text>
+
+    <rect x="238" y="322" width="80" height="34" rx="9" fill="url(#design)"/>
+    <rect x="322" y="322" width="290" height="34" rx="9" fill="url(#dev)"/>
+    <text x="250" y="344">🎨</text>
+    <text x="334" y="344">checkout</text>
+    <text x="600" y="344" text-anchor="end" font-family="'JetBrains Mono', Consolas, Menlo, monospace" font-size="11" font-weight="400" fill-opacity=".85">checkout.tsx</text>
+  </g>
+
+  <!-- Wave 3: integration joins everything -->
+  <g fill="none" stroke="#9D4EDD" stroke-width="2" stroke-opacity=".7">
+    <path d="M582 163C628 163 630 234 652 234"/>
+    <path d="M516 207C620 207 626 234 652 234"/>
+    <path d="M562 251C620 251 626 234 652 234"/>
+    <path d="M492 295C620 295 626 234 652 234"/>
+    <path d="M616 339C630 339 630 234 652 234"/>
+  </g>
+  <rect x="652" y="214" width="132" height="40" rx="10" fill="url(#dev)"/>
+  <text x="718" y="239" text-anchor="middle" fill="#FFF4F7" font-size="14" font-weight="800">integration</text>
+  <text x="718" y="276" text-anchor="middle" fill="#D9B8C8" font-size="12">the shared files:</text>
+  <text x="718" y="294" text-anchor="middle" fill="#D9B8C8" font-size="12">navigation, indexes</text>
+
+  <!-- End: QA -->
+  <rect x="826" y="146" width="120" height="210" rx="14" fill="url(#qa)"/>
+  <g transform="translate(886 222)">
+    <circle cx="-4" cy="-6" r="20" fill="#FFFFFF" fill-opacity=".15" stroke="#FFE9F0" stroke-width="5"/>
+    <path d="M10 8L30 28" stroke="#FFE9F0" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="886" y="296" text-anchor="middle" fill="#FFF4F7" font-size="20" font-weight="800">QA</text>
+  <text x="886" y="318" text-anchor="middle" fill="#FFE9F0" font-size="12">runs the whole app</text>
+
+  <!-- Legend -->
+  <g font-size="13" fill="#D9B8C8">
+    <rect x="40" y="394" width="18" height="18" rx="5" fill="url(#design)"/>
+    <text x="66" y="408">designer first</text>
+    <rect x="186" y="394" width="18" height="18" rx="5" fill="url(#dev)"/>
+    <text x="212" y="408">developer</text>
+    <rect x="310" y="394" width="18" height="18" rx="5" fill="url(#stripes)"/>
+    <text x="336" y="408">exclusive: runs alone (installs, migrations)</text>
+    <text x="960" y="408" text-anchor="end" fill="#FF6F8E" font-weight="700">wall time = slowest task of each wave</text>
+  </g>
+</svg>

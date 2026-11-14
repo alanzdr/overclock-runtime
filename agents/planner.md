@@ -28,8 +28,9 @@ they are.
 ## Read first
 
 1. `CLAUDE.md`, `.claude/overclock.md` and `.claude/roles/planner.md` if it exists.
-2. How the waves run: `${CLAUDE_PLUGIN_ROOT}/skills/run/SKILL.md`. The task format:
-   `${CLAUDE_PLUGIN_ROOT}/templates/tasks/task.md`.
+2. How the waves run: `overclock-show skills/run/SKILL.md` (section 3). The task format:
+   `overclock-show templates/tasks/task.md`. (Plugin files are read with `overclock-show`, never with
+   Read: they live outside the project.)
 3. `.claude/docs/roadmap.md` (the cycle you were given), `.claude/docs/product.md`,
    `.claude/docs/architecture.md` (folders, conventions, shared files) and the designer's docs. In
    `.claude/docs/decisions.md`, the "Decided by the user" table is fixed.

@@ -2,15 +2,10 @@
   "permissions": {
     "allow": [
       "Edit(src/**)",
-      "Write(src/**)",
       "Edit(public/**)",
-      "Write(public/**)",
       "Edit(e2e/**)",
-      "Write(e2e/**)",
       "Edit(messages/**)",
-      "Write(messages/**)",
       "Edit(scripts/**)",
-      "Write(scripts/**)",
       "Edit(package.json)",
       "Edit(tsconfig.json)",
       "Edit(*.config.ts)",

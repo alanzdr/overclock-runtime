@@ -2,6 +2,7 @@
 name: overclock
 description: Use when the user invokes /overclock, or wants to set up, adopt or update the Overclock Runtime autonomous process (planner, designers, developers, QA in parallel waves) in a new or existing project.
 argument-hint: "[what the project is, for a new project]"
+allowed-tools: Bash(overclock-show *), Bash(overclock-status), Bash(overclock-doc-sizes)
 ---
 
 # Overclock setup
@@ -16,15 +17,16 @@ Talk to the user in their language, and write every file you create in that lang
 templates' prose); keep the fixed labels of the templates (field names like `Status:`, `Cycle:`,
 `Files`, `Create:`/`Change:`, headings the scripts parse, file names) exactly as they are.
 
-Plugin files you will use: templates in `${CLAUDE_PLUGIN_ROOT}/templates/`, references and stack presets
-in `${CLAUDE_SKILL_DIR}/references/` and `${CLAUDE_SKILL_DIR}/presets/`.
+Plugin files (templates, references, stack presets) live outside the project: print them with
+`overclock-show <path>` (`overclock-show --list` shows them all) instead of reading them, so nothing
+stops to ask for permission.
 
 ## 1. Find the mode
 
-- `.claude/overclock.md` exists → **update** mode: read `${CLAUDE_SKILL_DIR}/references/update.md`.
-- The folder is empty or nearly so (no source code, no manifest) → **new project**: read
-  `${CLAUDE_SKILL_DIR}/references/new-project.md`.
-- Otherwise → **existing project**: read `${CLAUDE_SKILL_DIR}/references/existing-project.md`.
+- `.claude/overclock.md` exists → **update** mode: `overclock-show skills/overclock/references/update.md`.
+- The folder is empty or nearly so (no source code, no manifest) → **new project**: 
+  `overclock-show skills/overclock/references/new-project.md`.
+- Otherwise → **existing project**: `overclock-show skills/overclock/references/existing-project.md`.
 
 If the project already has a hand-made version of this kind of process (its own planner/developer agents
 and a develop-style skill in `.claude/`), tell the user what you found and ask whether to keep those
@@ -34,7 +36,7 @@ Not a git repository? The process needs git (one commit per task). Run `git init
 
 ## 2. Gather what the project layer needs
 
-Follow the reference of the mode. The goal is to fill `${CLAUDE_PLUGIN_ROOT}/templates/overclock.md` and
+Follow the reference of the mode. The goal is to fill `templates/overclock.md` and
 the first versions of the docs with real content, asking the user **only what you can't find or decide**:
 
 - Decide and proceed (the rule the whole process runs on). What you decide becomes a `D#` line in
@@ -45,7 +47,7 @@ the first versions of the docs with real content, asking the user **only what yo
 
 ## 3. Create the project layer
 
-Read `${CLAUDE_SKILL_DIR}/references/project-layer.md` and create everything it lists. In short:
+Print `skills/overclock/references/project-layer.md` and create everything it lists. In short:
 
 | File | From |
 |---|---|
@@ -75,5 +77,8 @@ Then tell the user, briefly:
 - what was created and the main decisions you made (`D#`), and what they decided (`A#`);
 - what they may want to review before starting (usually `product.md` and the first cycle of
   `roadmap.md`);
+- that Claude Code only applies the project's permissions in a trusted folder: if this session started
+  without the trust dialog (a headless run, for example), open the project interactively once and accept
+  it, or the agents will be asked about every write in `.claude/`;
 - how to run: `/loop /overclock:run` (or `/overclock:run` for a single step), how to give feedback
   (`/overclock:feedback`), and how to hold the process (`[paused]` in a cycle title).

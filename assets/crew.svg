@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" role="img" aria-labelledby="title desc" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="title">The crew</title>
+  <desc id="desc">Four chip characters: the planner with glasses and a clipboard, the designer with a beret and a brush, the developer with a hard hat and a code bubble, and QA with a magnifying glass.</desc>
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset=".5" stop-color="#C2185B"/>
+      <stop offset="1" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <linearGradient id="die" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF4D5E"/>
+      <stop offset=".55" stop-color="#D81B60"/>
+      <stop offset="1" stop-color="#8E3BD1"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FF2E4D" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#FF2E4D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A0B22"/>
+      <stop offset="1" stop-color="#160612"/>
+    </linearGradient>
+    <g id="chip">
+      <g fill="#E3194F">
+        <rect x="-37.5" y="-62" width="7" height="18" rx="2.5"/>
+        <rect x="-20.5" y="-62" width="7" height="18" rx="2.5"/>
+        <rect x="-3.5" y="-62" width="7" height="18" rx="2.5"/>
+        <rect x="13.5" y="-62" width="7" height="18" rx="2.5"/>
+        <rect x="30.5" y="-62" width="7" height="18" rx="2.5"/>
+        <rect x="-37.5" y="44" width="7" height="18" rx="2.5"/>
+        <rect x="-20.5" y="44" width="7" height="18" rx="2.5"/>
+        <rect x="-3.5" y="44" width="7" height="18" rx="2.5"/>
+        <rect x="13.5" y="44" width="7" height="18" rx="2.5"/>
+        <rect x="30.5" y="44" width="7" height="18" rx="2.5"/>
+        <rect x="-62" y="-37.5" width="18" height="7" rx="2.5"/>
+        <rect x="-62" y="-20.5" width="18" height="7" rx="2.5"/>
+        <rect x="-62" y="-3.5" width="18" height="7" rx="2.5"/>
+        <rect x="-62" y="13.5" width="18" height="7" rx="2.5"/>
+        <rect x="-62" y="30.5" width="18" height="7" rx="2.5"/>
+        <rect x="44" y="-37.5" width="18" height="7" rx="2.5"/>
+        <rect x="44" y="-20.5" width="18" height="7" rx="2.5"/>
+        <rect x="44" y="-3.5" width="18" height="7" rx="2.5"/>
+        <rect x="44" y="13.5" width="18" height="7" rx="2.5"/>
+        <rect x="44" y="30.5" width="18" height="7" rx="2.5"/>
+      </g>
+      <rect x="-50" y="-50" width="100" height="100" rx="14" fill="#1C0B19" stroke="url(#ring)" stroke-width="3.5"/>
+      <rect x="-36" y="-36" width="72" height="72" rx="10" fill="url(#die)"/>
+      <path d="M-29 -27Q-14 -32 4 -30" fill="none" stroke="#FFF" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+      <g fill="none" stroke="#1C0B19" stroke-width="4" stroke-linecap="round">
+        <path d="M-26 -14L-10 -9"/>
+        <path d="M26 -14L10 -9"/>
+      </g>
+      <ellipse cx="-14" cy="0" rx="6.5" ry="7.5" fill="#FFF4F7"/>
+      <ellipse cx="14" cy="0" rx="6.5" ry="7.5" fill="#FFF4F7"/>
+      <circle cx="-12.5" cy="1.5" r="3.5" fill="#1C0B19"/>
+      <circle cx="12.5" cy="1.5" r="3.5" fill="#1C0B19"/>
+      <path d="M-17 13Q0 31 17 13Q0 19 -17 13Z" fill="#1C0B19"/>
+      <path d="M-11 15Q0 18 11 15L10 18Q0 21 -10 18Z" fill="#FFF4F7"/>
+    </g>
+  </defs>
+
+  <!-- PLANNER -->
+  <g transform="translate(0 0)">
+    <rect x="2" y="2" width="228" height="376" rx="22" fill="url(#card)" stroke="url(#ring)" stroke-width="2.5"/>
+    <circle cx="116" cy="132" r="96" fill="url(#glow)"/>
+    <use href="#chip" transform="translate(110 132)"/>
+    <!-- glasses -->
+    <g transform="translate(110 132)" fill="none" stroke="#FFE9F0" stroke-width="3">
+      <circle cx="-14" cy="0" r="11"/>
+      <circle cx="14" cy="0" r="11"/>
+      <path d="M-3 0H3"/>
+    </g>
+    <!-- clipboard -->
+    <g transform="translate(166 150) rotate(12)">
+      <rect x="-22" y="-30" width="44" height="58" rx="6" fill="#FFE9F0"/>
+      <rect x="-10" y="-35" width="20" height="10" rx="3" fill="#9D4EDD"/>
+      <g stroke="#C2185B" stroke-width="3" stroke-linecap="round">
+        <path d="M-13 -14l4 4 7-8"/>
+        <path d="M-13 1l4 4 7-8"/>
+      </g>
+      <g stroke="#B9A0B0" stroke-width="3" stroke-linecap="round">
+        <path d="M4 -12H14"/>
+        <path d="M4 3H14"/>
+        <path d="M-13 17H14"/>
+      </g>
+    </g>
+    <text x="116" y="268" text-anchor="middle" fill="#FFE9F0" font-size="26" font-weight="800">Planner</text>
+    <text x="116" y="298" text-anchor="middle" fill="#D9B8C8" font-size="15">Writes the recipes.</text>
+    <text x="116" y="320" text-anchor="middle" fill="#D9B8C8" font-size="15">Gives every cook</text>
+    <text x="116" y="342" text-anchor="middle" fill="#D9B8C8" font-size="15">their own pan.</text>
+  </g>
+
+  <!-- DESIGNER -->
+  <g transform="translate(256 0)">
+    <rect x="2" y="2" width="228" height="376" rx="22" fill="url(#card)" stroke="url(#ring)" stroke-width="2.5"/>
+    <circle cx="116" cy="132" r="96" fill="url(#glow)"/>
+    <use href="#chip" transform="translate(110 132)"/>
+    <!-- beret -->
+    <g transform="translate(110 132)">
+      <ellipse cx="-6" cy="-48" rx="48" ry="15" fill="#9D4EDD"/>
+      <ellipse cx="-6" cy="-53" rx="40" ry="13" fill="#B565F0"/>
+      <rect x="-9" y="-72" width="6" height="10" rx="3" fill="#9D4EDD"/>
+    </g>
+    <!-- brush -->
+    <g transform="translate(172 160) rotate(-35)">
+      <rect x="-5" y="-6" width="10" height="56" rx="5" fill="#FFE9F0"/>
+      <rect x="-7" y="-16" width="14" height="12" rx="2" fill="#B9A0B0"/>
+      <path d="M-7 -16Q-9 -34 0 -46Q9 -34 7 -16Z" fill="#FF2E4D"/>
+    </g>
+    <circle cx="198" cy="96" r="7" fill="#FF8A3D"/>
+    <circle cx="186" cy="76" r="5" fill="#9D4EDD"/>
+    <circle cx="206" cy="70" r="4" fill="#FF2E4D"/>
+    <text x="116" y="268" text-anchor="middle" fill="#FFE9F0" font-size="26" font-weight="800">Designer</text>
+    <text x="116" y="298" text-anchor="middle" fill="#D9B8C8" font-size="15">Decides how every</text>
+    <text x="116" y="320" text-anchor="middle" fill="#D9B8C8" font-size="15">plate looks before</text>
+    <text x="116" y="342" text-anchor="middle" fill="#D9B8C8" font-size="15">anyone cooks it.</text>
+  </g>
+
+  <!-- DEVELOPER -->
+  <g transform="translate(512 0)">
+    <rect x="2" y="2" width="228" height="376" rx="22" fill="url(#card)" stroke="url(#ring)" stroke-width="2.5"/>
+    <circle cx="116" cy="132" r="96" fill="url(#glow)"/>
+    <use href="#chip" transform="translate(110 132)"/>
+    <!-- hard hat -->
+    <g transform="translate(110 132)">
+      <path d="M-40 -52C-40 -84 40 -84 40 -52Z" fill="#FF8A3D"/>
+      <rect x="-50" y="-56" width="100" height="10" rx="5" fill="#FF6B2C"/>
+      <rect x="-5" y="-82" width="10" height="28" rx="4" fill="#FFB27A"/>
+    </g>
+    <!-- code bubble -->
+    <g transform="translate(176 66)">
+      <rect x="-30" y="-20" width="60" height="40" rx="12" fill="#FFE9F0"/>
+      <path d="M-18 20L-24 32L-8 20Z" fill="#FFE9F0"/>
+      <text x="0" y="7" text-anchor="middle" fill="#C2185B" font-size="20" font-weight="800" font-family="'JetBrains Mono', Consolas, Menlo, monospace">&lt;/&gt;</text>
+    </g>
+    <text x="116" y="268" text-anchor="middle" fill="#FFE9F0" font-size="26" font-weight="800">Developers</text>
+    <text x="116" y="298" text-anchor="middle" fill="#D9B8C8" font-size="15">Cook at the same time,</text>
+    <text x="116" y="320" text-anchor="middle" fill="#D9B8C8" font-size="15">each in their own pan.</text>
+    <text x="116" y="342" text-anchor="middle" fill="#D9B8C8" font-size="15">Many at once.</text>
+  </g>
+
+  <!-- QA -->
+  <g transform="translate(768 0)">
+    <rect x="2" y="2" width="228" height="376" rx="22" fill="url(#card)" stroke="url(#ring)" stroke-width="2.5"/>
+    <circle cx="116" cy="132" r="96" fill="url(#glow)"/>
+    <use href="#chip" transform="translate(110 132)"/>
+    <!-- magnifier -->
+    <g transform="translate(110 132)">
+      <circle cx="14" cy="0" r="18" fill="#8FD3FF" fill-opacity=".25" stroke="#FFE9F0" stroke-width="5"/>
+      <path d="M27 13L60 46" stroke="#FFE9F0" stroke-width="9" stroke-linecap="round"/>
+      <path d="M44 30L60 46" stroke="#9D4EDD" stroke-width="9" stroke-linecap="round"/>
+    </g>
+    <!-- check badge -->
+    <g transform="translate(184 66)">
+      <circle r="20" fill="#FFE9F0"/>
+      <path d="M-9 0l6 6 12-13" fill="none" stroke="#C2185B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="116" y="268" text-anchor="middle" fill="#FFE9F0" font-size="26" font-weight="800">QA</text>
+    <text x="116" y="298" text-anchor="middle" fill="#D9B8C8" font-size="15">Tastes everything at</text>
+    <text x="116" y="320" text-anchor="middle" fill="#D9B8C8" font-size="15">the end and writes down</text>
+    <text x="116" y="342" text-anchor="middle" fill="#D9B8C8" font-size="15">what to fix tomorrow.</text>
+  </g>
+</svg>

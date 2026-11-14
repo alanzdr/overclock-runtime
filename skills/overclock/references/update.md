@@ -4,7 +4,7 @@ The project is already set up. Running `/overclock` again brings its layer up to
 plugin without stepping on what the project changed.
 
 1. Compare the `overclock:` version in `.claude/overclock.md`'s frontmatter with the plugin's
-   (`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`). Read the plugin's `CHANGELOG.md` for what changed
+   (`overclock-show --version`). Read `overclock-show CHANGELOG.md` for what changed
    in between, if it exists.
 2. **CLAUDE.md block:** compare the text between the markers with `templates/CLAUDE-block.md` (in the
    project's language). Bring in new or changed rules; keep the project's own additions inside the block

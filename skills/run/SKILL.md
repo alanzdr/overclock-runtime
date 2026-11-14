@@ -1,6 +1,7 @@
 ---
 name: run
 description: Use when the user invokes /overclock:run (often as /loop /overclock:run), or asks to move the roadmap forward, run the next step, or let the crew work on its own in a project set up by /overclock.
+allowed-tools: Bash(overclock-show *), Bash(overclock-status), Bash(overclock-task *), Bash(overclock-plan-check *), Bash(overclock-doc-sizes)
 ---
 
 # Overclock run
@@ -45,6 +46,19 @@ If the id is lost (new step), call a new developer with the fix prompt.
 `.claude/overclock.md` ("Roles" → "Models") overrides a role; the task has `Designer effort` (pass it as
 `effort`; for `global`, pass `model: "fable"` and `effort: "high"`); the task has `Developer effort` (pass
 it as `effort`, also on fix rounds). Name the model in the prompt's first line when you override it.
+
+**When a model runs out.** Plans can have separate usage limits per model (Fable has its own weekly
+limit), and Claude Code doesn't switch models on a usage limit: the agent just fails ("Agent terminated
+early due to an API error", with a usage, rate or quota limit in the detail) or comes back cut off. Then:
+
+1. Call the same agent again for the same work, one step down: `fable` → `opus` → `sonnet` (pass `model`;
+   keep the `effort`). Add to the prompt: "A previous attempt was cut off by a usage limit: check what it
+   already wrote and finish or fix it."
+2. Keep using the lower model for that role for the rest of the session; write in the step log
+   `Model limit: <model> → <fallback> (<role>)`, with the reset time if the error shows one.
+3. A limit on the lowest model, or on every model, is not a failure of the task: stop (see "When to
+   stop") with a `## Notice: usage limit` in `QUESTIONS.md` saying when it resets. Don't mark tasks
+   `blocked` for it.
 
 ## Files you read and write
 
@@ -189,6 +203,7 @@ question in `QUESTIONS.md` don't stop it. Stop **only** when:
 - nothing is left: no cycle (before the first `[paused]`) with an open item that can move, no open line in
   `BUGS.md`, and only `[low]` lines in `IMPROVEMENTS.md` (or everything left is `blocked` or depends only
   on the user). Note in `QUESTIONS.md` what needs unblocking; or
+- every model a role can fall back to hit its usage limit (see "When a model runs out"); or
 - a pre-check says so (wrong branch, pending changes with no task in progress, circuit breaker), QA
   returns `blocked`, or the project is broken by something no task solves.
 
@@ -205,4 +220,5 @@ When stopping, write a step log with a summary of the state and point to `QUESTI
 - Never edit the app's code, its data, the product, architecture and design docs, or the content of the
   tasks: that is the agents' work.
 - If an agent hangs or returns without a report, call another for the same task once; if it repeats, mark
-  the task `blocked` with the reason and move on.
+  the task `blocked` with the reason and move on. A usage limit is not this case: see "When a model runs
+  out".

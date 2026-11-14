@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""Prints a file that ships with the Overclock Runtime plugin: a template, a reference, a preset.
+
+The plugin lives outside the project, and reading outside the project asks for permission every
+time; this command prints those files instead, so agents never stop to ask. Its path also survives
+plugin updates.
+
+Usage (anywhere):
+    overclock-show templates/tasks/task.md        # print one file (path relative to the plugin)
+    overclock-show --list                         # list every file it can print
+    overclock-show --version                      # the installed plugin version
+"""
+import json
+import sys
+from pathlib import Path
+
+PLUGIN = Path(__file__).resolve().parent.parent
+FOLDERS = ("templates", "skills", "agents")
+SUFFIXES = {".md", ".json", ".py"}
+
+
+def printable():
+    for folder in FOLDERS:
+        for path in sorted((PLUGIN / folder).rglob("*")):
+            if path.is_file() and path.suffix in SUFFIXES:
+                yield path.relative_to(PLUGIN).as_posix()
+    yield "CHANGELOG.md"
+
+
+def main():
+    args = sys.argv[1:]
+    if len(args) != 1 or args[0] in ("-h", "--help"):
+        print(__doc__)
+        return 0 if args and args[0] in ("-h", "--help") else 2
+    if args[0] == "--list":
+        print("\n".join(printable()))
+        return 0
+    if args[0] == "--version":
+        manifest = json.loads((PLUGIN / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+        print(manifest["version"])
+        return 0
+    target = (PLUGIN / args[0]).resolve()
+    if not target.is_relative_to(PLUGIN) or target.relative_to(PLUGIN).as_posix() not in set(printable()):
+        print(f"not a plugin file: {args[0]} (overclock-show --list shows what exists)", file=sys.stderr)
+        return 1
+    sys.stdout.write(target.read_text(encoding="utf-8"))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

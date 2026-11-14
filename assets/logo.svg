@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Overclock Runtime: a determined CPU chip running hot, with flames on top</title>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="56%" r="60%">
+      <stop offset="0" stop-color="#4A0E33"/>
+      <stop offset=".6" stop-color="#26081F"/>
+      <stop offset="1" stop-color="#14060F"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset=".5" stop-color="#C2185B"/>
+      <stop offset="1" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <linearGradient id="die" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF4D5E"/>
+      <stop offset=".55" stop-color="#D81B60"/>
+      <stop offset="1" stop-color="#8E3BD1"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#FF8A3D"/>
+      <stop offset=".45" stop-color="#FF2E4D"/>
+      <stop offset="1" stop-color="#B5179E"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#FFE29A"/>
+      <stop offset="1" stop-color="#FF8A3D"/>
+    </linearGradient>
+    <linearGradient id="speed" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#FF2E4D"/>
+      <stop offset="1" stop-color="#FF2E4D" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FF2E4D" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#FF2E4D" stop-opacity="0"/>
+    </radialGradient>
+    <path id="flamePath" d="M256 52C270 92 318 118 326 168C332 206 300 236 256 236C212 236 180 206 186 168C192 132 222 120 228 92C236 110 244 118 250 120C246 96 248 72 256 52Z"/>
+    <path id="corePath" d="M256 120C264 146 292 160 294 190C296 214 278 230 256 230C234 230 216 214 218 190C220 170 238 160 242 140C246 152 250 156 253 157C251 144 252 132 256 120Z"/>
+  </defs>
+
+  <!-- Badge -->
+  <circle cx="256" cy="256" r="248" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="238" fill="none" stroke="url(#ring)" stroke-width="8"/>
+  <circle cx="256" cy="300" r="170" fill="url(#glow)"/>
+
+  <!-- Speed lines -->
+  <g stroke="url(#speed)" stroke-width="9" stroke-linecap="round">
+    <path d="M58 262H118"/>
+    <path d="M44 292H116"/>
+    <path d="M62 322H118"/>
+  </g>
+  <g stroke="url(#speed)" stroke-width="9" stroke-linecap="round" transform="translate(512 0) scale(-1 1)">
+    <path d="M58 262H118"/>
+    <path d="M44 292H116"/>
+    <path d="M62 322H118"/>
+  </g>
+
+  <!-- Flames -->
+  <use href="#flamePath" fill="url(#flame)" transform="translate(-74 64) scale(.62) translate(120 40)"/>
+  <use href="#flamePath" fill="url(#flame)" transform="translate(512 0) scale(-1 1) translate(-74 64) scale(.62) translate(120 40)"/>
+  <use href="#flamePath" fill="url(#flame)"/>
+  <use href="#corePath" fill="url(#core)"/>
+
+  <!-- Pins -->
+  <g fill="#E3194F">
+    <rect x="182" y="160" width="14" height="36" rx="4"/>
+    <rect x="216" y="160" width="14" height="36" rx="4"/>
+    <rect x="249" y="160" width="14" height="36" rx="4"/>
+    <rect x="282" y="160" width="14" height="36" rx="4"/>
+    <rect x="316" y="160" width="14" height="36" rx="4"/>
+    <rect x="182" y="376" width="14" height="36" rx="4"/>
+    <rect x="216" y="376" width="14" height="36" rx="4"/>
+    <rect x="249" y="376" width="14" height="36" rx="4"/>
+    <rect x="282" y="376" width="14" height="36" rx="4"/>
+    <rect x="316" y="376" width="14" height="36" rx="4"/>
+    <rect x="130" y="212" width="36" height="14" rx="4"/>
+    <rect x="130" y="246" width="36" height="14" rx="4"/>
+    <rect x="130" y="279" width="36" height="14" rx="4"/>
+    <rect x="130" y="312" width="36" height="14" rx="4"/>
+    <rect x="130" y="346" width="36" height="14" rx="4"/>
+    <rect x="346" y="212" width="36" height="14" rx="4"/>
+    <rect x="346" y="246" width="36" height="14" rx="4"/>
+    <rect x="346" y="279" width="36" height="14" rx="4"/>
+    <rect x="346" y="312" width="36" height="14" rx="4"/>
+    <rect x="346" y="346" width="36" height="14" rx="4"/>
+  </g>
+
+  <!-- Chip body and die -->
+  <rect x="156" y="186" width="200" height="200" rx="28" fill="#1C0B19" stroke="url(#ring)" stroke-width="6"/>
+  <rect x="184" y="214" width="144" height="144" rx="20" fill="url(#die)"/>
+  <path d="M196 232Q226 222 262 226" fill="none" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Face -->
+  <g fill="none" stroke="#1C0B19" stroke-width="8" stroke-linecap="round">
+    <path d="M208 258L240 268"/>
+    <path d="M304 258L272 268"/>
+  </g>
+  <ellipse cx="226" cy="286" rx="13" ry="15" fill="#FFF4F7"/>
+  <ellipse cx="286" cy="286" rx="13" ry="15" fill="#FFF4F7"/>
+  <circle cx="229" cy="289" r="7" fill="#1C0B19"/>
+  <circle cx="283" cy="289" r="7" fill="#1C0B19"/>
+  <path d="M222 314Q256 350 290 314Q256 326 222 314Z" fill="#1C0B19"/>
+  <path d="M234 318Q256 324 278 318L276 324Q256 330 236 324Z" fill="#FFF4F7"/>
+
+  <!-- Sweat drop -->
+  <path d="M320 226C326 238 330 245 330 251A10 10 0 0 1 310 251C310 245 314 238 320 226Z" fill="#8FD3FF"/>
+
+  <!-- Sparkles -->
+  <path d="M412 104Q416 130 442 134Q416 138 412 164Q408 138 382 134Q408 130 412 104Z" fill="#FFE9F0"/>
+  <path d="M104 128Q106 142 120 144Q106 146 104 160Q102 146 88 144Q102 142 104 128Z" fill="#FFE9F0" opacity=".85"/>
+  <path d="M420 400Q422 410 432 412Q422 414 420 424Q418 414 408 412Q418 410 420 400Z" fill="#FFE9F0" opacity=".7"/>
+</svg>

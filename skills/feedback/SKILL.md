@@ -1,6 +1,7 @@
 ---
 name: feedback
 description: Use when the user invokes /overclock:feedback, or, in a project set up by /overclock, says how they want something ("make the header more compact", "change the accent color", "this is broken", "don't use that library", "do it another way"), or answers a question from .claude/tasks/QUESTIONS.md.
+allowed-tools: Bash(overclock-status)
 ---
 
 # Overclock feedback

@@ -197,6 +197,26 @@ class StatusTests(FakeProject):
         self.assertIn("Overclock Runtime is set up", out)
 
 
+class ShowTests(unittest.TestCase):
+    def run_show(self, *args):
+        proc = subprocess.run(["python3", str(BIN / "overclock-show"), *args], capture_output=True, text=True,
+                              cwd=tempfile.gettempdir())
+        return proc.returncode, proc.stdout + proc.stderr
+
+    def test_prints_a_template(self):
+        code, out = self.run_show("templates/tasks/task.md")
+        self.assertEqual(code, 0)
+        self.assertIn("- **Status:** todo", out)
+
+    def test_refuses_paths_outside_the_plugin(self):
+        self.assertEqual(self.run_show("../../etc/passwd")[0], 1)
+        self.assertEqual(self.run_show("bin/overclock-show")[0], 1)
+
+    def test_list_and_version(self):
+        self.assertIn("skills/overclock/references/project-layer.md", self.run_show("--list")[1])
+        self.assertRegex(self.run_show("--version")[1].strip(), r"^\d+\.\d+\.\d+$")
+
+
 class DocSizesTests(FakeProject):
     def test_flags_big_docs(self):
         (self.root / ".claude/docs/architecture.md").write_text("x" * 50 * 1024)
